@@ -54,7 +54,7 @@ Provides: x-window-manager
 Depends: libc6 (>= 2.8), libev4 (>= 1:4.04), libpcre3 (>= 8.10), libstartup-notification0 (>= 0.10), libx11-6, libxcb-icccm4 (>= 0.3.8), libxcb-keysyms1 (>= 0.3.8), libxcb-randr0 (>= 1.3), libxcb-util0 (>= 0.3.8), libxcb-xinerama0, libxcb1, libxcursor1 (>> 1.1.2), libyajl2 (>= 2.0.4), perl, x11-utils
 Recommends: xfonts-base
 Suggests: rxvt-unicode | x-terminal-emulator
-Description-en: improved dynamic tiling window manager
+Description: improved dynamic tiling window manager
  Key features of i3 are good documentation, reasonable defaults (changeable in
  a simple configuration file) and good multi-monitor support. The user
  interface is designed for power users and emphasizes keyboard usage. i3 uses
@@ -86,11 +86,28 @@ SHA256: 2894bc999b3982c4e57f100fa31e21b52e14c5f3bc7ad5345f46842fcdab0db7`)
 	if paragraphs[0]["Build-Depends"] != "debhelper (>= 8),bash-completion (>= 1:1.1-3),libcurl4-nss-dev, libreadline-dev, libxml2-dev, libpcre3-dev, liboauth-dev, xsltproc, docbook-xsl, docbook-xml, dh-autoreconf" {
 		t.Fatal(`"Build-Depends" (folder) was not parsed correctly`)
 	}
-	expectedFiles := ` 3d5f65778bf3f89be03c313b0024b62c 1980 bti_032-1.dsc
+
+	expectedDescription := `improved dynamic tiling window manager
+ Key features of i3 are good documentation, reasonable defaults (changeable in
+ a simple configuration file) and good multi-monitor support. The user
+ interface is designed for power users and emphasizes keyboard usage. i3 uses
+ XCB for asynchronous communication with X11 and aims to be fast and
+ light-weight.
+ .
+ Please be aware i3 is primarily targeted at advanced users and developers.`
+	if paragraphs[1]["Description"] != expectedDescription {
+		fmt.Print(expectedDescription)
+		fmt.Print(paragraphs[1]["Description"])
+		t.Fatal(`"Description" (multiline) was not parsed correctly`)
+	}
+
+	expectedFiles := `
+ 3d5f65778bf3f89be03c313b0024b62c 1980 bti_032-1.dsc
  1e0d0b693fdeebec268004ba41701baf 59773 bti_032.orig.tar.gz
- ac1229a6d685023aeb8fcb0806324aa8 5065 bti_032-1.debian.tar.gz
-`
+ ac1229a6d685023aeb8fcb0806324aa8 5065 bti_032-1.debian.tar.gz`
 	if paragraphs[0]["Files"] != expectedFiles {
+		fmt.Print(expectedFiles)
+		fmt.Print(paragraphs[0]["Files"])
 		t.Fatal(`"Files" (multiline) was not parsed correctly`)
 	}
 }
