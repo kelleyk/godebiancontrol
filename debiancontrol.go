@@ -69,7 +69,7 @@ func Parse(input io.Reader) (paragraphs []Paragraph, err error) {
 				// Whitespace, including newlines, is significant in the values
 				// of multiline fields, therefore we just append the line
 				// as-is.
-				paragraph[lastkey] += line
+				paragraph[lastkey] += "\n" + strings.TrimRight(line, "\n")
 			} else {
 				// For folded lines we strip whitespace before appending.
 				paragraph[lastkey] += trimmed
